@@ -13,4 +13,10 @@ class UserRepository implements UserRepositoryInterface
       return User::find($id)->toJson();
     }
   }
+
+  public function getUserLoginData()
+  {
+    return Auth::user();
+  }
+
 }
