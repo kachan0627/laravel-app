@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use App\Repositories\User\UserRepositoryInterface;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+
 
 class RegisterController extends Controller
 {
@@ -35,9 +36,10 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepositoryInterface $user_repository)
     {
         $this->middleware('guest');
+        $this->user_repository = $user_repository;
     }
 
     /**
@@ -65,12 +67,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+      return $this->user_repository->createUserData($data);
+      /*  return User::create([
             'acount_name' => $data['acount_name'],
             'nick_name' => $data['nick_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
 
-        ]);
+        ]);*/
     }
 }

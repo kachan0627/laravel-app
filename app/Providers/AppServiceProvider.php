@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
           \App\Repositories\User\UserRepositoryInterface::class,
           \App\Repositories\User\UserRepository::class
+
         );
     }
 
