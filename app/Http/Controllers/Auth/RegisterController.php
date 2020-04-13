@@ -65,6 +65,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
+     //会員登録
     protected function create(array $data)
     {
       return $this->user_repository->createUserData($data);
