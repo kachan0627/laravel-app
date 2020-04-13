@@ -1,23 +1,26 @@
 <?php
 
 namespace Tests\Feature;
-
+use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserTest extends TestCase
 {
-  use DatabaseTransactions;
+
     /**
      * A basic feature test example.
      *
      * @return void
      */
-
+     //use DatabaseTransactions;
+    //use RefreshDatabase;
   /*  public function testExample()
     {
         $response = $this->get('/');
@@ -25,16 +28,58 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         //$this->assertTrue(true);
     }*/
+    protected $user;
+
+    public function UserSetUp():void
+    {
+        parent::UserSetUp();
+
+        //テストデータ作成
+        $this->user = factory(User::class)->create();
+        dd($this->user);
+    }
+
    public function testUserLogin()
     {
-      //偽のユーザを作成
-      $user = factory(User::class,'student')->create();
-      //ログイン処理
-      $this->visit('/login')
+
+      $this->assertTrue(true);
+      $response = $this->get('/login');
+      $response->assertStatus(200);
+      //dd($response);
+      //ログイン処理(作成したテストユーザのemail呼び出し)
+      $response = $this->json('POST',route('login'),[
+        'email'=>'test1@test.com',
+        'password'=>Hash::make('12345678'),
+      ]);
+      $response->assertStatus(200);
+      /*
+      //ログイン処理(作成したテストユーザのemail呼び出し)
+      $response = $this->json('POST',route('login'),[
+        'email'=>$this->user->email,
+        'password'=> '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+      ]);
+      dd($this->user);
+      //responseが返却されユーザ名取得
+      $response->assertStatus(200)->assertJson(['name'=> $this->user->name]);
+      //指定されたユーザが認証されていることを確認
+      $this->assertAuthenticatedAs($this->user);
+      */
+      /*$this->visit('/login')
            ->type($user->email,'email')
-           ->type('secret','password')
+           ->type('$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','password')
            ->press('ログイン')
-           ->seePageIs('/home');
+           ->seePageIs('/home');*/
 
     }
+   /*public function testHello(){
+      $this->assertTrue(true);
+      $arr = [];
+      $this->assertEmpty($arr);
+      $msg ="Hello";
+      $this->assertEquals('Hello',$msg);
+      $n = random_int(0,100);
+      $this->assertLessThan(100,$n);
+    }*/
+
+
 }

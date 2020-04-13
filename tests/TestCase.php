@@ -8,5 +8,9 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
     //test中でもlocal環境を見に行ってしまうため、キャッシュを読み込まないようにしている
-    //if(file_exists(_DIR_.''))
+  /*  public function createApplication()
+    {
+    if(file_exists(__DIR__.'/../bootstrap/cache/config.php'))
+        unlink(__DIR__.'/../bootstrap/cache/config.php');
+    }*/
 }
