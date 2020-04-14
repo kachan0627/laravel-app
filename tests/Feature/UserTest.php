@@ -44,18 +44,23 @@ class UserTest extends TestCase
         ]);*/
         //dd($this->user);
     }
-
+//ログイン認証が出来るかテスト
    public function testUserLogin()
     {
-
       $this->assertTrue(true);
+      $this->assertFalse(Auth::check());
+      //ログイン処理
       $this->post('/login',[
         'email' => 'test1@test.com',
         'password' => '12345678'
       ]);
-      $response= $this->get('/home');
+      //ログイン出来ているかチェック
       $this->assertTrue(Auth::check());
+      $response= $this->get('/home');
       $response->assertStatus(200);
+      //ログアウト処理
+      $this->post('/logout');
+      $this->assertFalse(Auth::check());
     //  dd($this->user);
 
       //ログイン状態では無いことを確認する
@@ -87,15 +92,19 @@ class UserTest extends TestCase
            ->seePageIs('/home');*/
 
     }
-   /*public function testHello(){
-      $this->assertTrue(true);
-      $arr = [];
-      $this->assertEmpty($arr);
-      $msg ="Hello";
-      $this->assertEquals('Hello',$msg);
-      $n = random_int(0,100);
-      $this->assertLessThan(100,$n);
-    }*/
+//DBに存在しないデータでログイン出来ないかテスト
+    public function testNotUserLogin(){
+      $this->assertFalse(Auth::check());
+      //ログイン処理
+      $this->post('/login',[
+        'email' => 'test2@test.com',
+        'password' => '12345678kfkfk'
+      ]);
+      //ログイン出来ていないかチェック
+      $this->assertFalse(Auth::check());
+      $response= $this->get('/home');
+      $response->assertStatus(302);
 
+    }
 
 }
