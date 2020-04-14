@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Auth;
 
 class UserTest extends TestCase
 {
@@ -35,29 +35,39 @@ class UserTest extends TestCase
         parent::setUp();
 
         //テストデータ作成
-        $this->user = factory(User::class,10)->create();
-        /*$this->user = factory(User::class)->create([
+      //  $this->user = factory(User::class,1)->create();
+      /*  $this->user = factory(User::class)->create([
           'acount_name' => 'testes1',
           'nick_name' => 'tecchan1',
           'email' => 'testes@test.com',
           'password' =>'$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
         ]);*/
-        dd($this->user);
+        //dd($this->user);
     }
 
    public function testUserLogin()
     {
 
       $this->assertTrue(true);
-      $response = $this->get('/login');
-      $response->assertStatus(200);
-      //dd($this->user);
-      //ログイン処理(作成したテストユーザのemail呼び出し)
-      $response = $this->json('POST',route('login'),[
-        'email'=>'test1@test.com',
-        'password'=>Hash::make('12345678'),
+      $this->post('/login',[
+        'email' => 'test1@test.com',
+        'password' => '12345678'
       ]);
+      $response= $this->get('/home');
+      $this->assertTrue(Auth::check());
       $response->assertStatus(200);
+    //  dd($this->user);
+
+      //ログイン状態では無いことを確認する
+      //$this->assertFalse(Auth::check());
+      //ログイン処理(作成したテストユーザのemail呼び出し)
+      /*$response = $this->withoutMiddleware()->post('login',[
+        'email'=>'shyanne86@example.net',
+        'password'=>'$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+      ]);*/
+      //認証されているかチェック
+      //$this->assertTrue(Auth::check());
+      //$response->assertStatus(200);
       /*
       //ログイン処理(作成したテストユーザのemail呼び出し)
       $response = $this->json('POST',route('login'),[

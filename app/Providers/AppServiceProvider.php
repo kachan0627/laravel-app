@@ -13,7 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //第一引数：結合するクラス名
+        //第二引数：インスタンスを返すコールバック関数
         $this->app->bind(
           \App\Repositories\User\UserRepositoryInterface::class,
           \App\Repositories\User\UserRepository::class
