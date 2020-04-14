@@ -30,12 +30,18 @@ class UserTest extends TestCase
     }*/
     protected $user;
 
-    public function UserSetUp():void
+    public function setUp():void
     {
-        parent::UserSetUp();
+        parent::setUp();
 
         //テストデータ作成
-        $this->user = factory(User::class)->create();
+        $this->user = factory(User::class,10)->create();
+        /*$this->user = factory(User::class)->create([
+          'acount_name' => 'testes1',
+          'nick_name' => 'tecchan1',
+          'email' => 'testes@test.com',
+          'password' =>'$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+        ]);*/
         dd($this->user);
     }
 
@@ -45,7 +51,7 @@ class UserTest extends TestCase
       $this->assertTrue(true);
       $response = $this->get('/login');
       $response->assertStatus(200);
-      //dd($response);
+      //dd($this->user);
       //ログイン処理(作成したテストユーザのemail呼び出し)
       $response = $this->json('POST',route('login'),[
         'email'=>'test1@test.com',
