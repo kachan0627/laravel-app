@@ -2,7 +2,7 @@
 namespace App\Repositories\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Auth;
 class UserRepository implements UserRepositoryInterface
 {
   public function __construct(User $user){

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Repositories\User\UserRepositoryInterface;
 //use App\Http\Resources\tweet AS TweetResource;
 use App\Http\Resources\User AS UserResource;
 use App\Models\tweet;
@@ -19,9 +19,11 @@ class TweetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function __construct()
+     public function __construct(UserRepositoryInterface $user_repository)
      {
-         $this->middleware('auth');
+       $this->middleware('auth');
+       $this->user_repository = $user_repository;
+
      }
 
     public function index()
@@ -145,7 +147,7 @@ class TweetsController extends Controller
       }
     }
     //followテーブルをjsonファイルで出力
-    public function follow_json($id = -1){
+    /*public function follow_json($id = -1){
       if($id == -1){
         return follow::get()->toJson();
       }else{
@@ -166,6 +168,18 @@ class TweetsController extends Controller
     }
     public function login_id(){
       return Auth::id();
+    }*/
+    //Userテーブルをjsonファイルで出力
+    public function User_json($id=-1){
+      return $this->user_repository->getUserRecordByJson($id);
+    }
+    //ログインしているユーザーのusertable情報を返却する
+    public function login_user(){
+      return $this->user_repository->getUserLoginData();
+    }
+    //ログインしているユーザーのidを返却する
+    public function login_id(){
+      return $this->user_repository->getUserLoginId();
     }
     public function logout(){
 
