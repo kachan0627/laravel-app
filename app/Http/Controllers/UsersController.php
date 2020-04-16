@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 //use追加
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-//use App\Models\User;
+use App\Models\User;
 use App\Models\profile;
 use App\Models\tweet;
 use App\Models\follow;
 use App\Http\Resources\User AS UserResource;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -19,6 +21,14 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function __construct(UserRepositoryInterface $user_repository)
+     {
+       $this->middleware('auth');
+       $this->user_repository = $user_repository;
+
+     }
+
+
     public function index(User $user)
     {
 
@@ -46,6 +56,31 @@ class UsersController extends Controller
         $follower->unfollow($user->id);
         return back();
       }
+    }
+
+    public function UserJson(int $id=-1){
+
+      return $this->user_repository->getUserRecordByJson($id);
+
+    }
+    //ログインしているユーザーのusertable情報を返却する
+    public function loginUser(){
+      return $this->user_repository->getUserLoginData();
+    }
+    //ログインしているユーザーのidを返却する
+    public function loginId(){
+      return $this->user_repository->getUserLoginId();
+    }
+    //ログアウト処理
+    public function logout(){
+
+      Auth::logout();
+      return view('login');
+    }
+    //userを新規登録する
+    public function userCreate(array $data){
+      //dd('通ってます');
+      return $this->user_repository->createUserData($data);
     }
     /**
      * Show the form for creating a new resource.

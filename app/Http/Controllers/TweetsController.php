@@ -174,29 +174,6 @@ class TweetsController extends Controller
     public function login_id(){
       return Auth::id();
     }*/
-    //Userテーブルをjsonファイルで出力デフォルト引数定義しないほうがいい。
-    public function UserJson(int $id){
 
-      return $this->user_repository->getUserRecordByJson($id);
-
-    }
-    //ログインしているユーザーのusertable情報を返却する
-    public function loginUser(){
-      return $this->user_repository->getUserLoginData();
-    }
-    //ログインしているユーザーのidを返却する
-    public function loginId(){
-      return $this->user_repository->getUserLoginId();
-    }
-    //ログアウト処理
-    public function logout(){
-
-      Auth::logout();
-      return view('login');
-    }
-    //userを新規登録する
-    public function userCreate(array $data){
-      //dd('通ってます');
-      return $this->user_repository->createUserData($data);
-    }
+    
 }
