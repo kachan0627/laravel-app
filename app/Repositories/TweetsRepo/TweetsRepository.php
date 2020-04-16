@@ -1,9 +1,15 @@
 <?php
 namespace App\Repositories\TweetsRepo;
 use App\Models\tweet;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+//use App\Models\User;
 class TweetsRepository implements TweetsRepositoryInterface
 {
+
+
+
+
   public function postTweets(Request $request){
     $addtweet =new tweet();
     $addtweet->user_id = $request->input('user_id');

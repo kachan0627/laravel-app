@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\TweetsRepo\TweetsRepositoryInterface;
 //use App\Http\Resources\tweet AS TweetResource;
 use App\Http\Resources\User AS UserResource;
@@ -20,10 +19,9 @@ class TweetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function __construct(UserRepositoryInterface $user_repository,TweetsRepositoryInterface $tweet_repository)
+     public function __construct(TweetsRepositoryInterface $tweet_repository)
      {
        $this->middleware('auth');
-       $this->user_repository = $user_repository;
        $this->tweet_repository = $tweet_repository;
 
      }
@@ -117,11 +115,11 @@ class TweetsController extends Controller
     }
     //tweet追加
     public function tweetPostJson(Request $request){
-      $addtweet =new tweet();
+    /*  $addtweet =new tweet();
       $addtweet->user_id = $request->input('user_id');
       $addtweet->text = $request->input('text');
-      $addtweet->save();
-      //$this->tweet_repository->postTweets($request);
+      $addtweet->save();*/
+      $this->tweet_repository->postTweets($request);
 
 
     }
@@ -158,22 +156,7 @@ class TweetsController extends Controller
       }else{
         return follow::find($id)->toJson();
       }
-    }
-    //Userテーブルをjsonファイルで出力
-    public function User_json($id = -1){
-      if($id == -1){
-        return User::get()->toJson();
-      }else{
-        return User::find($id)->toJson();
-      }
-    }
-
-    public function login_user(){
-      return Auth::user();
-    }
-    public function login_id(){
-      return Auth::id();
     }*/
 
-    
+
 }
