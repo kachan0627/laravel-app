@@ -44,24 +44,43 @@ class UserTest extends TestCase
         ]);*/
         //dd($this->user);
     }
+//ファクトリー生成したデータでログインできるかテスト
+  public function testFactoryUserLogin(){
+    $this->assertFalse(Auth::check());
+    //ログイン処理
+  /*  $this->post('/login',[
+      'email' => $this->user->email,
+      'password' => $this->user->password,
+    ]);
+    //ログイン出来ているかチェック
+    $this->assertTrue(Auth::check());
+    $response= $this->get('/home');
+    $response->assertStatus(200);
+    //ログアウト処理
+    $this->post('/logout');
+    $this->assertFalse(Auth::check());*/
+
+  }
+
 //ログイン認証が出来るかテスト
    public function testUserLogin()
     {
       $this->assertTrue(true);
       $this->assertFalse(Auth::check());
       //ログイン処理
-      $this->post('/login',[
-        'email' => 'test1@test.com',
+      $this->json('post','/login',[
+        'email' => 'test2@test.com',
         'password' => '12345678'
       ]);
       //ログイン出来ているかチェック
       $this->assertTrue(Auth::check());
       $response= $this->get('/home');
       $response->assertStatus(200);
+      //dd($this->json('get','/tweets/login_user'));
       //ログアウト処理
       $this->post('/logout');
       $this->assertFalse(Auth::check());
-    //  dd($this->user);
+
 
       //ログイン状態では無いことを確認する
       //$this->assertFalse(Auth::check());
@@ -92,8 +111,8 @@ class UserTest extends TestCase
            ->seePageIs('/home');*/
 
     }
-//DBに存在しないデータでログイン出来ないかテスト
-    public function testNotUserLogin(){
+//DBに存在しないデータでログイン出来ないかテスト~notpass
+    public function testNotUserPassLogin(){
       $this->assertFalse(Auth::check());
       //ログイン処理
       $this->post('/login',[
@@ -106,5 +125,19 @@ class UserTest extends TestCase
       $response->assertStatus(302);
 
     }
+    //DBに存在しないデータでログイン出来ないかテスト~notemail
+        public function testNotUserEmailLogin(){
+          $this->assertFalse(Auth::check());
+          //ログイン処理
+          $this->post('/login',[
+            'email' => 'testkskdkd@test.com',
+            'password' => '12345678'
+          ]);
+          //ログイン出来ていないかチェック
+          $this->assertFalse(Auth::check());
+          $response= $this->get('/home');
+          $response->assertStatus(302);
+
+        }
 
 }

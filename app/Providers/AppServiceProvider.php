@@ -15,9 +15,16 @@ class AppServiceProvider extends ServiceProvider
     {
         //第一引数：結合するクラス名
         //第二引数：インスタンスを返すコールバック関数
+        //ユーザリポジトリバインド（結合）
         $this->app->bind(
           \App\Repositories\User\UserRepositoryInterface::class,
           \App\Repositories\User\UserRepository::class
+
+        );
+        //ツイートリポジトリバインド（結合）
+        $this->app->bind(
+          \App\Repositories\TweetsRepo\TweetsRepositoryInterface::class,
+          \App\Repositories\TweetsRepo\TweetsRepository::class
 
         );
     }

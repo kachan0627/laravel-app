@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\TweetsRepo\TweetsRepositoryInterface;
 //use App\Http\Resources\tweet AS TweetResource;
 use App\Http\Resources\User AS UserResource;
 use App\Models\tweet;
@@ -19,10 +20,11 @@ class TweetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function __construct(UserRepositoryInterface $user_repository)
+     public function __construct(UserRepositoryInterface $user_repository,TweetsRepositoryInterface $tweet_repository)
      {
        $this->middleware('auth');
        $this->user_repository = $user_repository;
+       $this->tweet_repository = $tweet_repository;
 
      }
 
@@ -106,7 +108,7 @@ class TweetsController extends Controller
         $tweet->delete();
     }
     //tweetテーブルをjsonファイルで出力
-    public function tweet_json($id = -1){
+    public function tweetJson(int $id=-1){
       if($id == -1){
         return tweet::get()->toJson();
       }else{
@@ -114,15 +116,17 @@ class TweetsController extends Controller
       }
     }
     //tweet追加
-    public function tweet_post_json(Request $request){
+    public function tweetPostJson(Request $request){
       $addtweet =new tweet();
       $addtweet->user_id = $request->input('user_id');
       $addtweet->text = $request->input('text');
       $addtweet->save();
+      //$this->tweet_repository->postTweets($request);
+
 
     }
     //profileを編集
-    public function profile_update(Request $request){
+    public function profileUpdate(Request $request){
       $updateprof =profile::find($request->input('user_id'))->toJson();
       $updateprof->introduction = $request->input('introduction');
       $updateprof->place = $request->input('place');
@@ -131,7 +135,7 @@ class TweetsController extends Controller
 
     }
     //profileテーブルをjsonファイルで出力
-    public function profile_json($id = -1){
+    public function profileJson(int $id=-1){
       if($id == -1){
         return profile::get()->toJson();
       }else{
@@ -139,13 +143,14 @@ class TweetsController extends Controller
       }
     }
     //favoriteテーブルをjsonファイルで出力
-    public function favorite_json($id = -1){
+    public function favoriteJson(int $id){
       if($id == -1){
         return favorite::get()->toJson();
       }else{
         return favorite::find($id)->toJson();
       }
     }
+
     //followテーブルをjsonファイルで出力
     /*public function follow_json($id = -1){
       if($id == -1){
@@ -169,21 +174,29 @@ class TweetsController extends Controller
     public function login_id(){
       return Auth::id();
     }*/
-    //Userテーブルをjsonファイルで出力
-    public function User_json($id=-1){
+    //Userテーブルをjsonファイルで出力デフォルト引数定義しないほうがいい。
+    public function UserJson(int $id){
+
       return $this->user_repository->getUserRecordByJson($id);
+
     }
     //ログインしているユーザーのusertable情報を返却する
-    public function login_user(){
+    public function loginUser(){
       return $this->user_repository->getUserLoginData();
     }
     //ログインしているユーザーのidを返却する
-    public function login_id(){
+    public function loginId(){
       return $this->user_repository->getUserLoginId();
     }
+    //ログアウト処理
     public function logout(){
 
       Auth::logout();
       return view('login');
+    }
+    //userを新規登録する
+    public function userCreate(array $data){
+      //dd('通ってます');
+      return $this->user_repository->createUserData($data);
     }
 }
