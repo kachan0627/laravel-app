@@ -55,6 +55,7 @@ class UserRepoTest extends TestCase
         //$response= $this->json('get','/getUserRecordByJson');
         $response= $this->json('get','/tweets/User_json');
         //exceptionが返却されているか確認する。
+        //dd($response);
         $response->assertStatus(500);
         //ログアウト処理
         $this->post('/logout');
@@ -65,24 +66,18 @@ class UserRepoTest extends TestCase
 
    public function testcreate()
     {
-      //ログイン出来ているかチェック
-      $this->assertFalse(Auth::check());
-        //$this->assertFalse(Auth::check());
-        //ログイン処理
+      $response = $this->get('/');
 
-        $response = $this->json('post','/login',[
-          'email' => 'test2@test.com',
-          'password' => '12345678'
-        ]);
-        //ログイン出来ているかチェック
-        $this->assertTrue(Auth::check());
+      $response->assertStatus(200);
+      $user = new User();
+       $user->acount_name='undertaker';
+       $user->nick_name='mr.taker';
+       $user->email='taker@taker.com';
+       $user->password='aaaaaaaaa';
+
         //アカウントクリエイトする際にModelNotFoundExceptionを返却する
-        $response= $this->post(action('TweetsController@userCreate',[
-          'acount_name' =>  'undertaker',
-          'nick_name' => 'mr.taker',
-          'email' => 'taker@taker.com',
-          'password' => 'aaaaaaaaa'
-        ]));
+      /* $response= $this->post(action('UsersController@userCreate',$user));//ここ
+        $response->assertStatus(500);*/
         /*$response= $this->json('post','/register')->create([
           'acount_name' =>  'undertaker',
           'nick_name' => 'mr.taker',
@@ -91,10 +86,8 @@ class UserRepoTest extends TestCase
         ]);*/
        //$response= $this->json('get','/tweets/User_json/1');
         //print_r($this->json('get','/tweets/User_json/1'));
-        $response->assertStatus(500);
-        //ログアウト処理
-        $this->post('/logout');
-        $this->assertFalse(Auth::check());
+
+
 
 
     }

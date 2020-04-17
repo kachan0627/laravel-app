@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Auth;
 //use App\Models\User;
 class TweetsRepository implements TweetsRepositoryInterface
 {
+  public function __construct(tweet $tweet){
+    $this->tweet =$tweet;
+  }
 
 
 
@@ -15,6 +18,7 @@ class TweetsRepository implements TweetsRepositoryInterface
     $addtweet->user_id = $request->input('user_id');
     $addtweet->text = $request->input('text');
     $addtweet->save();
+    return $addtweet;
   }
 
 }

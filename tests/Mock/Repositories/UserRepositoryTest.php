@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Repositories\User\UserRepositoryInterface;
+use Exception;
 
 class UserRepositoryTest implements UserRepositoryInterface
 {
@@ -14,14 +15,15 @@ class UserRepositoryTest implements UserRepositoryInterface
 
   public function createUserData(array $data)
   {
-    dd('createUserData通ってます');
+    //dd('createUserData通ってます');
     throw new ModelNotFoundException;
+    throw new Exception('createUserData例外発生しています');
   }
 
   public function getUserRecordByJson(int $id)
   {
-    dd('getUserRecordByJson通ってます');
-    throw new Exception('例外発生しています');
+    //dd('getUserRecordByJson通ってます');
+    throw new Exception('getUserRecordByJson例外発生しています');
 
   }
   public function getUserLoginData()

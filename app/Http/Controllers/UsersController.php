@@ -13,6 +13,8 @@ use App\Models\tweet;
 use App\Models\follow;
 use App\Http\Resources\User AS UserResource;
 use Illuminate\Support\Facades\Auth;
+use Exception;
+use Illuminate\Http\JsonResponse;
 
 class UsersController extends Controller
 {
@@ -59,9 +61,13 @@ class UsersController extends Controller
     }
 
     public function UserJson(int $id=-1){
-
-      return $this->user_repository->getUserRecordByJson($id);
-
+      try{
+        $this->user_repository->getUserRecordByJson($id);
+        return response()->json();
+      }catch(\Exception $e){
+        //dd($e);
+        return response()->json([],500);
+      }
     }
     //ログインしているユーザーのusertable情報を返却する
     public function loginUser(){

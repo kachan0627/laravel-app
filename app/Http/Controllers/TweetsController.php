@@ -11,6 +11,8 @@ use App\Models\favorite;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Exception;
+use Illuminate\Http\JsonResponse;
 
 class TweetsController extends Controller
 {
@@ -119,7 +121,15 @@ class TweetsController extends Controller
       $addtweet->user_id = $request->input('user_id');
       $addtweet->text = $request->input('text');
       $addtweet->save();*/
-      $this->tweet_repository->postTweets($request);
+        try{
+        print_r('$this->tweet_repository->postTweets($request)');
+        $this->tweet_repository->postTweets($request);
+        return response()->json();
+      }catch(\Exception $e){
+        print_r('tweetPostエクセプション通ってます');
+        //dd($e);
+        return response()->json([],500);
+      }
 
 
     }
