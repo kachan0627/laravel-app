@@ -19,13 +19,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
           \App\Repositories\User\UserRepositoryInterface::class,
           \App\Repositories\User\UserRepository::class
-
         );
         //ツイートリポジトリバインド（結合）
         $this->app->bind(
           \App\Repositories\TweetsRepo\TweetsRepositoryInterface::class,
           \App\Repositories\TweetsRepo\TweetsRepository::class
-
+        );
+        //プロフィールリポジトリバインド
+        $this->app->bind(
+          \App\Repositories\Profile\ProfileRepositoryInterface::class,
+          \App\Repositories\Profile\ProfileRepository::class
         );
     }
 

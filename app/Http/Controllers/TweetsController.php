@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Repositories\TweetsRepo\TweetsRepositoryInterface;
+use App\Repositories\Profile\ProfileRepositoryInterface;
 //use App\Http\Resources\tweet AS TweetResource;
 use App\Http\Resources\User AS UserResource;
 use App\Models\tweet;
@@ -21,10 +22,11 @@ class TweetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function __construct(TweetsRepositoryInterface $tweet_repository)
+     public function __construct(TweetsRepositoryInterface $tweet_repository,ProfileRepositoryInterface $profile_repository)
      {
        $this->middleware('auth');
        $this->tweet_repository = $tweet_repository;
+       $this->profile_repository = $profile_repository;
 
      }
 
@@ -109,10 +111,10 @@ class TweetsController extends Controller
     }
     //tweetテーブルをjsonファイルで出力
     public function tweetJson(int $id=-1){
-      if($id == -1){
-        return tweet::get()->toJson();
-      }else{
-        return tweet::find($id)->toJson();
+        try{
+        return $this->tweet_repository->getTweets($id);
+      }catch(\Exception $e){
+        return response()->json([],500);
       }
     }
     //tweet追加
@@ -144,11 +146,14 @@ class TweetsController extends Controller
     }
     //profileテーブルをjsonファイルで出力
     public function profileJson(int $id=-1){
-      if($id == -1){
-        return profile::get()->toJson();
-      }else{
-        return profile::find($id)->toJson();
+      try{
+        return $this->profile_repository->getProfile($id);
+      }catch(\Exception $e){
+        print_r('getProfileエクセプション通ってます');
+        //dd($e);
+        return response()->json([],500);
       }
+
     }
     //favoriteテーブルをjsonファイルで出力
     public function favoriteJson(int $id){

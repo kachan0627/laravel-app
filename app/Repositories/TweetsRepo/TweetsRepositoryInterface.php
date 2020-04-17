@@ -7,4 +7,5 @@ interface TweetsRepositoryInterface
 {
   // code...
   public function postTweets(Request $request);
+  public function getTweets(int $id);
 }

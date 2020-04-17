@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 use App\Models\User as User;
-use App\Models\tweets;
+use App\Models\tweet;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -35,7 +35,7 @@ class TweetsTest extends TestCase
 
      }
 
-     public function testTweets(){
+     public function testPostTweets(){
       /* //Userクラスの$user生成
        $user = new User();
         $user->acount_name='test_user2';
@@ -62,5 +62,21 @@ class TweetsTest extends TestCase
       //ログアウト処理
         $this->post('/logout');
         $this->assertFalse(Auth::check());
+     }
+
+     public function testGetTweets(){
+       //ログイン処理
+       $this->json('post','/login',[
+         'email' => 'test2@test.com',
+         'password' => '12345678'
+       ]);
+       //ログイン出来ているかチェック
+       $this->assertTrue(Auth::check());
+
+       $response= $this->json('get','/tweets/tweet_json');
+       $response->assertStatus(500);
+       //ログアウト処理
+         $this->post('/logout');
+         $this->assertFalse(Auth::check());
      }
 }

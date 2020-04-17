@@ -62,8 +62,9 @@ class UsersController extends Controller
 
     public function UserJson(int $id=-1){
       try{
-        $this->user_repository->getUserRecordByJson($id);
-        return response()->json();
+        response()->json();
+        return $this->user_repository->getUserRecordByJson($id);
+
       }catch(\Exception $e){
         //dd($e);
         return response()->json([],500);

@@ -16,4 +16,9 @@ class TweetsRepositoryTest implements TweetsRepositoryInterface
     throw new Exception('postTweets例外発生しています。',500);
 
   }
+
+  public function getTweets(int $id=-1)
+  {
+    throw new Exception('getTweets例外発生しています。');
+  }
 }
