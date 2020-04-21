@@ -19,7 +19,7 @@ abstract class DuskTestCase extends BaseTestCase
      */
     public static function prepare()
     {
-        static::startChromeDriver();
+      //  static::startChromeDriver();
     }
 
     /**
@@ -27,7 +27,26 @@ abstract class DuskTestCase extends BaseTestCase
      *
      * @return \Facebook\WebDriver\Remote\RemoteWebDriver
      */
+    protected function baseUrl(){
+      //return 'http://project-dev:80';
+      return 'http://web';
+    }
+
     protected function driver()
+    {
+      $options = (new ChromeOptions)->addArguments([
+          '--disable-gpu',
+          '--headless',
+          '--window-size=1920,1080',
+      ]);
+
+         return RemoteWebDriver::create(
+            'http://selenium:4444/wd/hub', DesiredCapabilities::chrome()->setCapability(
+                ChromeOptions::CAPABILITY, $options
+            )
+          );
+    }
+  /*  protected function driver()
     {
         $options = (new ChromeOptions)->addArguments([
             '--disable-gpu',
@@ -36,9 +55,10 @@ abstract class DuskTestCase extends BaseTestCase
         ]);
 
         return RemoteWebDriver::create(
-            'http://localhost:10080', DesiredCapabilities::chrome()->setCapability(
+            'http://selenium:4444/wb/hub', DesiredCapabilities::chrome()->setCapability(
                 ChromeOptions::CAPABILITY, $options
             )
         );
-    }
+
+    }*/
 }
