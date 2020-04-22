@@ -39,7 +39,7 @@ class FormTest extends DuskTestCase
          });
      }
      //投稿できるかのテスト(DB)
-     public function testFormCheck()
+     public function testFormCheckDB()
      {
          $this->browse(function (Browser $browser) {
              $browser->visit('/create')
@@ -53,7 +53,7 @@ class FormTest extends DuskTestCase
          $this->assertDatabaseHas('tweets',['text'=>'やあ！投稿できてる？']);
      }
      //投稿できるかのテスト(browser)
-     public function testFormCheck()
+     public function testFormCheckbrowser()
      {
          $this->browse(function (Browser $browser) {
              $browser->visit('/create')
