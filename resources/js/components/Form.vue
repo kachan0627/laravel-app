@@ -8,9 +8,9 @@
         <form>
             <div class="form-group">
                 <label for="TopicContent">ツイート</label>
-                <textarea class="form-control" id="tweet" rows="3" v-model="text"></textarea>
+                <textarea class="form-control" name="tweet" id="tweet" rows="3" v-model="text"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary" @click.prevent="create">ツイートする</button>
+            <button type="submit" class="btn btn-primary" name="create" @click.prevent="create">ツイートする</button>
         </form>
     </div>
 </template>

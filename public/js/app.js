@@ -38510,7 +38510,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: { id: "tweet", rows: "3" },
+          attrs: { name: "tweet", id: "tweet", rows: "3" },
           domProps: { value: _vm.text },
           on: {
             input: function($event) {
@@ -38527,7 +38527,7 @@ var render = function() {
         "button",
         {
           staticClass: "btn btn-primary",
-          attrs: { type: "submit" },
+          attrs: { type: "submit", name: "create" },
           on: {
             click: function($event) {
               $event.preventDefault()
