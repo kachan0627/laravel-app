@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 //use追加
-use App\Repositories\User\UserRepositoryInterface;
+
+use App\Services\User\UserServiceInterface;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\User;
@@ -23,10 +24,11 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function __construct(UserRepositoryInterface $user_repository)
+     public function __construct(UserServiceInterface $user_service)
      {
        $this->middleware('auth');
-       $this->user_repository = $user_repository;
+       //$this->user_repository = $user_repository;
+       $this->user_service = $user_service;
 
      }
 
@@ -63,7 +65,7 @@ class UsersController extends Controller
     public function UserJson(int $id=-1){
       try{
         response()->json();
-        return $this->user_repository->getUserRecordByJson($id);
+        return $this->user_service->getUserRecordService($id)->toJson();
 
       }catch(\Exception $e){
         //dd($e);
@@ -72,11 +74,11 @@ class UsersController extends Controller
     }
     //ログインしているユーザーのusertable情報を返却する
     public function loginUser(){
-      return $this->user_repository->getUserLoginData();
+      return $this->user_service->getUserLoginDataService();
     }
     //ログインしているユーザーのidを返却する
     public function loginId(){
-      return $this->user_repository->getUserLoginId();
+      return $this->user_service->getUserLoginIdService();
     }
     //ログアウト処理
     public function logout(){
@@ -87,7 +89,7 @@ class UsersController extends Controller
     //userを新規登録する
     public function userCreate(array $data){
       //dd('通ってます');
-      return $this->user_repository->createUserData($data);
+      return $this->user_service->createUserDataService($data);
     }
     /**
      * Show the form for creating a new resource.
@@ -153,5 +155,10 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function Duplication()
+    {
+      return $this->user_service->DuplicationUserData();
     }
 }

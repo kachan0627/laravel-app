@@ -3,11 +3,10 @@ namespace App\Repositories\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+
 class UserRepository implements UserRepositoryInterface
 {
-  public function __construct(User $user){
-    $this->user =$user;
-  }
+
 
   public function createUserData(array $data)
   {
@@ -20,12 +19,13 @@ class UserRepository implements UserRepositoryInterface
         ]);
   }
 
-  public function getUserRecordByJson($id =-1)
+
+  public function getUserRecord($id)
   {
     if($id == -1){
-      return User::get()->toJson();
+      return User::get();
     }else{
-      return User::find($id)->toJson();
+      return User::find($id);
     }
   }
 
