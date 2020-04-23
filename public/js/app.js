@@ -2116,6 +2116,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //インポート先で使用出来る関数をオブジェクトとしてまとめたもの
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/*function ReplaceNewLine(tweet){
+  var Replacetext =tweet;
+  console.log(Replacetext.length);
+  console.log(Replacetext[39].text);
+  for(var ArrayNumber=0;ArrayNumber<Replacetext.length;ArrayNumber++){
+    Replacetext[ArrayNumber].text.replace(/\n/g,'<br/>');
+    console.log(Replacetext[ArrayNumber].text);
+  }
+  console.log(Replacetext[39].text);
+  return Replacetext;
+}*/
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2131,7 +2143,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
     return {
       msg: 'wait...',
       name: '',
-      tweets: []
+      tweets: [],
+      Replacetext: []
     };
   },
   methods: {
@@ -2141,6 +2154,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
   },
   computed: {
     reversetweets: function reversetweets() {
+      //return this.tweets.slice().reverse();
       return this.tweets.slice().reverse();
     }
   }
@@ -38580,18 +38594,15 @@ var render = function() {
             )
           ]),
           _vm._v("本文"),
-          _c(
-            "div",
-            {
-              staticStyle: {
-                padding: "10px",
-                "margin-bottom": "10px",
-                border: "1px solid #333333",
-                "border-radius": "10px"
-              }
+          _c("div", {
+            staticStyle: {
+              padding: "10px",
+              "margin-bottom": "10px",
+              border: "1px solid #333333",
+              "border-radius": "10px"
             },
-            [_vm._v(_vm._s(Tweet.text))]
-          ),
+            domProps: { innerHTML: _vm._s(Tweet.text.replace(/\n/g, "<br/>")) }
+          }),
           _vm._v(" "),
           _c("hr")
         ])

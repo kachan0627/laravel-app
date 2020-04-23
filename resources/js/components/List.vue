@@ -4,7 +4,7 @@
     <hr>
     <ul>
       <li v-for="(Tweet,key) in reversetweets">
-        <p>ツイートID: {{Tweet.id}} ユーザーID{{Tweet.user_id}}</p>本文<div style="padding:10px;margin-bottom:10px;border:1px solid #333333;border-radius:10px;">{{Tweet.text}}</div>
+        <p>ツイートID: {{Tweet.id}} ユーザーID{{Tweet.user_id}}</p>本文<div style="padding:10px;margin-bottom:10px;border:1px solid #333333;border-radius:10px;" v-html="Tweet.text.replace(/\n/g,'<br/>')"></div>
         <hr>
       </li>
     </ul>
@@ -12,8 +12,22 @@
 </template>
 
 <script>
+
 //インポート先で使用出来る関数をオブジェクトとしてまとめたもの
 const axios = require('axios');
+
+/*function ReplaceNewLine(tweet){
+  var Replacetext =tweet;
+  console.log(Replacetext.length);
+  console.log(Replacetext[39].text);
+  for(var ArrayNumber=0;ArrayNumber<Replacetext.length;ArrayNumber++){
+    Replacetext[ArrayNumber].text.replace(/\n/g,'<br/>');
+    console.log(Replacetext[ArrayNumber].text);
+  }
+  console.log(Replacetext[39].text);
+  return Replacetext;
+}*/
+
 export default {
   mounted() {
     //this.getItems();
@@ -27,18 +41,23 @@ export default {
       msg:'wait...',
       name:'',
       tweets:[],
+      Replacetext:[],
 
     }
   },
   methods: {
-  
+
     doAction: function(){
       this.msg='Hello, ' + this.name + '!!!';
       //console.log(this.tweets);
-    }
+    },
+
+
+
   },
   computed:{
     reversetweets(){
+      //return this.tweets.slice().reverse();
       return this.tweets.slice().reverse();
     }
   },
