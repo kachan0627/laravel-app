@@ -33,7 +33,8 @@ Route::get('/tweets/profile_json/{id}','TweetsController@profileJson');
 Route::get('/tweets/login_user','UsersController@loginUser');//login情報
 Route::get('/tweets/login_id','UsersController@loginId');//login_id情報
 Route::get('/tweets/logout','UsersController@logout');//Logout
-Route::get('/duplication','UsersController@Duplication');
+
+//Route::get('/duplication','UsersController@Duplication');//デバック用の関数
 
 //Route::get('/home', 'HomeController@index')->name('home');
 

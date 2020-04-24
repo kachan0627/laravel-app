@@ -124,7 +124,8 @@ class TweetsController extends Controller
       $addtweet->text = $request->input('text');
       $addtweet->save();*/
         try{
-        print_r('$this->tweet_repository->postTweets($request)');
+        //print_r('$this->tweet_repository->postTweets($request)');
+        //dd($request);
         $this->tweet_repository->postTweets($request);
         return response()->json();
       }catch(\Exception $e){

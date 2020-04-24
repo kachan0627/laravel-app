@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-use App\Repositories\User\UserRepositoryInterface;
+use App\Services\User\UserServiceInterface;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -36,10 +36,10 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct(UserRepositoryInterface $user_repository)
+    public function __construct(UserServiceInterface $user_service)
     {
         $this->middleware('guest');
-        $this->user_repository = $user_repository;
+        $this->user_service = $user_service;
     }
 
     /**
@@ -68,7 +68,18 @@ class RegisterController extends Controller
      //会員登録
     protected function create(array $data)
     {
-      return $this->user_repository->createUserData($data);
+      try{
+        //dd($data);
+        //$CreateUser = new User();
+        //$CreateUser =$this->user_service->conversionUserClass($data);
+        //dd($CreateUser);
+        return $this->user_service->DuplicationUserData($data);
+        //return $this->user_service->createUserDataService($data);//これはできる
+      }catch(\Exception $e){
+
+        return response()->json([],500);
+      }
+      //return $this->user_service->createUserData($data);
       /*  return User::create([
             'acount_name' => $data['acount_name'],
             'nick_name' => $data['nick_name'],

@@ -16,6 +16,7 @@ use App\Http\Resources\User AS UserResource;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -156,9 +157,16 @@ class UsersController extends Controller
     {
         //
     }
-
-    public function Duplication()
+    //デバック用の関数
+    //本当はrequest
+    /*public function Duplication()
     {
-      return $this->user_service->DuplicationUserData();
-    }
+      $TestUser = new User();
+      $TestUser->acount_name = 'test_user1';
+      $TestUser->nick_name='Test1';
+      $TestUser->email = 'test1@test.com';
+      $TestUser->password = Hash::make('12345678');
+      //dd($TestUser);
+      return $this->user_service->DuplicationUserData($TestUser);
+    }*/
 }
