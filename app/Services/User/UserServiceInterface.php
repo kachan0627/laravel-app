@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 
+use Illuminate\Http\Request;
 //use App\Repositories\User\UserRepositoryInterface;
 //use App\Models\User;
 /**
@@ -15,6 +16,7 @@ interface UserServiceInterface
   public function getUserLoginIdService();
   public function createUserDataService(array $data);
   public function getUserRecordService(int $id=-1);
+  public function CheckLoginUser(Request $request);
 
 
   //private function conversionUserClass(array $data);

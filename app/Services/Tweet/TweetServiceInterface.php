@@ -7,5 +7,6 @@ interface TweetServiceInterface
 {
   public function postTweetsService(Request $request);
   public function getTweetsService(int $id);
-  public function checkTweetsBlank(Request $request);
+  public function checkTweets(Request $request);
+  public function getUserTweets();
 }

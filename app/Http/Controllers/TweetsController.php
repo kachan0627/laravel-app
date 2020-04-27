@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\View;
+//use Illuminate\Support\Facades\View;
 
 class TweetsController extends Controller
 {
@@ -123,15 +123,9 @@ class TweetsController extends Controller
     }
     //tweet追加
     public function tweetPostJson(Request $request){
-    /*  $addtweet =new tweet();
-      $addtweet->user_id = $request->input('user_id');
-      $addtweet->text = $request->input('text');
-      $addtweet->save();*/
         try{
-        //print_r('$this->tweet_repository->postTweets($request)');
-        //dd($request);
-        //$this->TweetService->postTweetsService($request);
-        $this->TweetService->checkTweetsBlank($request);
+        Log::debug('tweetPost通ってます');
+        $this->TweetService->checkTweets($request);
         return response()->json();
       }catch(\Exception $e){
         Log::debug('tweetPostエクセプション通ってます');
@@ -140,6 +134,18 @@ class TweetsController extends Controller
 
 
     }
+    //ログインしているユーザの投稿を表示する
+    public function tweetGetOnlyLoginUser()
+    {
+      try{
+        return $this->TweetService->getUserTweets()->toJson();
+        response()->json();
+      }catch(\Exception $e){
+        return response()->json([],500);
+      }
+    }
+
+
     //profileを編集
     public function profileUpdate(Request $request){
       $updateprof =profile::find($request->input('user_id'))->toJson();

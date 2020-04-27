@@ -21,6 +21,7 @@ Route::get('/tweets/tweet_json','TweetsController@tweetJson');//tweetjsonファ�
 Route::get('/tweets/tweet_json/{id}','TweetsController@tweetJson');
 Route::post('/tweets/tweet_post_json','TweetsController@tweetPostJson');//tweetjsonファイルを出力
 Route::post('/tweets/tweet_post_json/{a}/{b}','TweetsController@tweetPostJson');//tweetjsonファイルを出力
+Route::get('/tweets/tweet_only_user','TweetsController@tweetGetOnlyLoginUser');
 Route::post('/tweets/profile_update','TweetsController@profileUpdate');//tweetjsonファイルを出力
 Route::get('/tweets/User_json','UsersController@UserJson');//Userjsonファイルを出力
 Route::get('/tweets/User_json/{id}','UsersController@UserJson');

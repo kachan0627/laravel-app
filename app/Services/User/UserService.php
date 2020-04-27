@@ -6,6 +6,7 @@ use App\Repositories\User\UserRepositoryInterface;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Support\Facades\Hash;
 use Exception;
+use Illuminate\Http\Request;
 
 class UserService implements UserServiceInterface
 {
@@ -24,6 +25,7 @@ class UserService implements UserServiceInterface
     $TestTmp->password = Hash::make($data['password']);
     return $TestTmp;
   }
+
   //ユーザ登録の際にデータの重複がないかチェックする関数
   //引数は会員登録情報
   //被りがある場合はexceptionを発生させる
@@ -33,10 +35,12 @@ class UserService implements UserServiceInterface
     //$this->user_repository->getUserRecord(-1);
     $UserTmp[] = new User();//DBの全ユーザ情報格納する変数
     $UserTmp = $this->user_repository->getUserRecord(-1);//DBの全ユーザ情報格納する-1で全データ呼び出し
+    $TestUser = new User();
     $TestUser = $this->conversionUserClass($data);//arrayデータをユーザモデルに変換。
-    //dd($TestUser->acount_name);
-    for($ArrayCount=0;$ArrayCount<count($UserTmp);$ArrayCount++){
-      if($UserTmp[$ArrayCount]->nick_name == $TestUser->nick_name){
+    for($ArrayCount = 0; $ArrayCount < count($UserTmp); $ArrayCount++)
+    {
+      if($UserTmp[$ArrayCount]->acount_name == $TestUser->acount_name)
+      {
         //dd($UserTmp[$ArrayCount]->acount_name);
         throw new Exception('既にユーザが存在してます');
       }
@@ -44,6 +48,23 @@ class UserService implements UserServiceInterface
     return $this->user_repository->createUserData($data);
   }
 
+  //ログインするための情報がDBのユーザ情報と一致しているか確認する関数
+  public function CheckLoginUser(Request $request)
+  {
+    //全てのユーザ情報を$AllUserList[]に格納
+    $AllUserList[] = new User();
+    $AllUserList = $this->user_repository->getUserRecord(-1);
+    //ログインする際に入力された情報を格納
+    $LoginEmail = $request->input('email');
+    $LoginPassword = $request->input('password');
+    /*for($ArrayCount = 0; $ArrayCount < count($AllUserList); $ArrayCount++)
+    {
+      if(){
+
+      }
+
+    }*/
+  }
 
   public function getUserLoginDataService()
   {
