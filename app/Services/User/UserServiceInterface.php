@@ -2,8 +2,8 @@
 
 namespace App\Services\User;
 
-use App\Repositories\User\UserRepositoryInterface;
-use App\Models\User;
+//use App\Repositories\User\UserRepositoryInterface;
+//use App\Models\User;
 /**
  *ユーザ
  */

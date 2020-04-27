@@ -25,9 +25,9 @@ class TweetsRepository implements TweetsRepositoryInterface
   public function getTweets(int $id=-1)
   {
     if($id == -1){
-        return tweet::get()->toJson();
+        return tweet::get();
       }else{
-        return tweet::find($id)->toJson();
+        return tweet::find($id);
       }
   }
 

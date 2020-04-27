@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Repositories\TweetsRepo\TweetsRepositoryInterface;
 use App\Repositories\Profile\ProfileRepositoryInterface;
+use App\Services\Tweet\TweetServiceInterface;
 //use App\Http\Resources\tweet AS TweetResource;
 use App\Http\Resources\User AS UserResource;
 use App\Models\tweet;
@@ -14,6 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\View;
 
 class TweetsController extends Controller
 {
@@ -22,10 +26,10 @@ class TweetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function __construct(TweetsRepositoryInterface $tweet_repository,ProfileRepositoryInterface $profile_repository)
+     public function __construct(TweetServiceInterface $TweetService,ProfileRepositoryInterface $profile_repository)
      {
        $this->middleware('auth');
-       $this->tweet_repository = $tweet_repository;
+       $this->TweetService = $TweetService;
        $this->profile_repository = $profile_repository;
 
      }
@@ -112,7 +116,7 @@ class TweetsController extends Controller
     //tweetテーブルをjsonファイルで出力
     public function tweetJson(int $id=-1){
         try{
-        return $this->tweet_repository->getTweets($id);
+        return $this->TweetService->getTweetsService($id)->toJson();
       }catch(\Exception $e){
         return response()->json([],500);
       }
@@ -126,11 +130,11 @@ class TweetsController extends Controller
         try{
         //print_r('$this->tweet_repository->postTweets($request)');
         //dd($request);
-        $this->tweet_repository->postTweets($request);
+        //$this->TweetService->postTweetsService($request);
+        $this->TweetService->checkTweetsBlank($request);
         return response()->json();
       }catch(\Exception $e){
-        print_r('tweetPostエクセプション通ってます');
-        //dd($e);
+        Log::debug('tweetPostエクセプション通ってます');
         return response()->json([],500);
       }
 

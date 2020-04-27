@@ -27,6 +27,7 @@ class UserService implements UserServiceInterface
   //ユーザ登録の際にデータの重複がないかチェックする関数
   //引数は会員登録情報
   //被りがある場合はexceptionを発生させる
+  //重複がない場合はユーザー登録を行う
   public function DuplicationUserData(array $data)
   {
     //$this->user_repository->getUserRecord(-1);
@@ -61,5 +62,11 @@ class UserService implements UserServiceInterface
   {
     return $this->user_repository->getUserRecord($id);
   }
+
+  //検索機能
+  /*public function SerchUserData()
+  {
+
+  }*/
 
 }
