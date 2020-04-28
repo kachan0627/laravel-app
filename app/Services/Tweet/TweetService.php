@@ -27,14 +27,14 @@ class TweetService implements TweetServiceInterface
     return $this->TweetsRepository->getTweets($id);
   }
   //チェック関数を統合している。
-  public function checkTweets(Request $request)
+  public function checkTweets(int $userId,string $text)
   {
     $checktweet = new tweet();
-    $checktweet->user_id = $request->input('user_id');
-    $checktweet->text = $request->input('text');
+    $checktweet->user_id = $userId;
+    $checktweet->text = $text;
     $this->checkTweetsUserIDNULL($checktweet);
     $this->checkTweetsBlank($checktweet);
-    return $this->TweetsRepository->postTweets($request);
+    return $this->TweetsRepository->postTweets($checktweet);
 
   }
 

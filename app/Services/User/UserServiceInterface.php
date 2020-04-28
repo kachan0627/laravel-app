@@ -16,7 +16,7 @@ interface UserServiceInterface
   public function getUserLoginIdService();
   public function createUserDataService(array $data);
   public function getUserRecordService(int $id=-1);
-  public function CheckLoginUser(Request $request);
+  public function CheckLoginUser(string $LoginEmail,string $LoginPassword);
 
 
   //private function conversionUserClass(array $data);

@@ -14,14 +14,14 @@ class TweetsRepository implements TweetsRepositoryInterface
 
 
   //投稿したい文章をツイートモデルの変数を新しく作成して保存する
-  public function postTweets(Request $request)
+  public function postTweets(tweet $tweet)
   {
     //Log::debug('postTweets通ってます');
-    $addtweet =new tweet();
+    /*$addtweet =new tweet();
     $addtweet->user_id = $request->input('user_id');
-    $addtweet->text = $request->input('text');
-    $addtweet->save();
-    return $addtweet;
+    $addtweet->text = $request->input('text');*/
+    $tweet->save();
+    return $tweet;
   }
   //全投稿情報取得。または一件取得。
   public function getTweets(int $id=-1)

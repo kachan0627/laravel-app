@@ -46,6 +46,10 @@ export default {
                 this.text = '';
                 this.saved = true;
                 console.log('created');
+            })
+            .catch(e => {
+              console.log(e.response.data.errors);
+              //console.log('error');
             });
         }
 

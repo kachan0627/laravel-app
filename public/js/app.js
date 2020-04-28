@@ -2085,6 +2085,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
         _this2.text = '';
         _this2.saved = true;
         console.log('created');
+      })["catch"](function (e) {
+        console.log(e.response.data.errors); //console.log('error');
       });
     }
   }
@@ -2116,18 +2118,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //インポート先で使用出来る関数をオブジェクトとしてまとめたもの
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/*function ReplaceNewLine(tweet){
-  var Replacetext =tweet;
-  console.log(Replacetext.length);
-  console.log(Replacetext[39].text);
-  for(var ArrayNumber=0;ArrayNumber<Replacetext.length;ArrayNumber++){
-    Replacetext[ArrayNumber].text.replace(/\n/g,'<br/>');
-    console.log(Replacetext[ArrayNumber].text);
-  }
-  console.log(Replacetext[39].text);
-  return Replacetext;
-}*/
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {

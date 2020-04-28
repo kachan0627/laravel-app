@@ -16,18 +16,6 @@
 //インポート先で使用出来る関数をオブジェクトとしてまとめたもの
 const axios = require('axios');
 
-/*function ReplaceNewLine(tweet){
-  var Replacetext =tweet;
-  console.log(Replacetext.length);
-  console.log(Replacetext[39].text);
-  for(var ArrayNumber=0;ArrayNumber<Replacetext.length;ArrayNumber++){
-    Replacetext[ArrayNumber].text.replace(/\n/g,'<br/>');
-    console.log(Replacetext[ArrayNumber].text);
-  }
-  console.log(Replacetext[39].text);
-  return Replacetext;
-}*/
-
 export default {
   mounted() {
     //this.getItems();

@@ -45,6 +45,7 @@ class UserService implements UserServiceInterface
       if($UserTmp[$ArrayCount]->acount_name == $TestUser->acount_name)
       {
         //dd($UserTmp[$ArrayCount]->acount_name);
+
         throw new Exception('既にユーザが存在してます');
       }
     }
@@ -53,11 +54,11 @@ class UserService implements UserServiceInterface
 
   //ログインするための情報がDBのユーザ情報と一致しているか確認する関数
   //引数をrequest->email,passwordに変更
-  public function CheckLoginUser(Request $request)
+  public function CheckLoginUser(string $LoginEmail,string $LoginPassword)
   {
     //ログインする際に入力された情報を格納
-    $LoginEmail = $request->input('email');
-    $LoginPassword = $request->input('password');
+    //$LoginEmail = $request->input('email');
+  //  $LoginPassword = $request->input('password');
     //emailを用いてDBからuser情報を呼び出す
     $DBUser  = new User();
     $DBUser = $this->user_repository->getUserRecordUsingEmail($LoginEmail);

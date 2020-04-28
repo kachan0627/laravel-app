@@ -127,8 +127,10 @@ class TweetsController extends Controller
     {
 
         try{
+        $userId = $request->input('user_id');
+        $text = $request->input('text');
         Log::debug('tweetPost通ってます');
-        $this->TweetService->checkTweets($request);
+        $this->TweetService->checkTweets($userId,$text);
         return response()->json();
       }catch(\Exception $e){
         Log::debug('tweetPostエクセプション通ってます');
