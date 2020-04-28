@@ -13,6 +13,7 @@ use App\Models\follow;
 use App\Models\favorite;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateTweetRequest;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -122,7 +123,7 @@ class TweetsController extends Controller
       }
     }
     //tweet追加
-    public function tweetPostJson(Request $request)
+    public function tweetPostJson(CreateTweetRequest $request)
     {
 
         try{
