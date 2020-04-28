@@ -122,7 +122,8 @@ class TweetsController extends Controller
       }
     }
     //tweet追加
-    public function tweetPostJson(Request $request){
+    public function tweetPostJson(Request $request)
+    {
         try{
         Log::debug('tweetPost通ってます');
         $this->TweetService->checkTweets($request);

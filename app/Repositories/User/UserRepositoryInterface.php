@@ -9,4 +9,5 @@ interface UserRepositoryInterface
   public function getUserLoginId();
   public function createUserData(array $data);
   public function getUserRecord(int $id);
+  public function getUserRecordUsingEmail(string $email);
 }

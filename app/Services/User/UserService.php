@@ -7,6 +7,7 @@ use App\Services\User\UserServiceInterface;
 use Illuminate\Support\Facades\Hash;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserService implements UserServiceInterface
 {
@@ -30,6 +31,7 @@ class UserService implements UserServiceInterface
   //引数は会員登録情報
   //被りがある場合はexceptionを発生させる
   //重複がない場合はユーザー登録を行う
+  //truefalse戻り値に変更
   public function DuplicationUserData(array $data)
   {
     //$this->user_repository->getUserRecord(-1);
@@ -37,6 +39,7 @@ class UserService implements UserServiceInterface
     $UserTmp = $this->user_repository->getUserRecord(-1);//DBの全ユーザ情報格納する-1で全データ呼び出し
     $TestUser = new User();
     $TestUser = $this->conversionUserClass($data);//arrayデータをユーザモデルに変換。
+    //DBからユーザを情報を取り出した方が良い気がする。。。
     for($ArrayCount = 0; $ArrayCount < count($UserTmp); $ArrayCount++)
     {
       if($UserTmp[$ArrayCount]->acount_name == $TestUser->acount_name)
@@ -49,21 +52,21 @@ class UserService implements UserServiceInterface
   }
 
   //ログインするための情報がDBのユーザ情報と一致しているか確認する関数
+  //引数をrequest->email,passwordに変更
   public function CheckLoginUser(Request $request)
   {
-    //全てのユーザ情報を$AllUserList[]に格納
-    $AllUserList[] = new User();
-    $AllUserList = $this->user_repository->getUserRecord(-1);
     //ログインする際に入力された情報を格納
     $LoginEmail = $request->input('email');
     $LoginPassword = $request->input('password');
-    /*for($ArrayCount = 0; $ArrayCount < count($AllUserList); $ArrayCount++)
-    {
-      if(){
-
-      }
-
-    }*/
+    //emailを用いてDBからuser情報を呼び出す
+    $DBUser  = new User();
+    $DBUser = $this->user_repository->getUserRecordUsingEmail($LoginEmail);
+    //emailから呼び出したユーザ情報のパスワードと入力されたパスワードが一致するか判定する
+    if(!Hash::check($LoginPassword,$DBUser->password)){
+      throw new Exception('パスワード不一致です');
+    }else{
+      Log::debug('パスワード一致です');
+    }
   }
 
   public function getUserLoginDataService()

@@ -2,7 +2,7 @@
 namespace App\Services\Tweet;
 
 use App\Repositories\TweetsRepo\TweetsRepositoryInterface;
-//use App\Repositories\User\UserRepositoryInterface;
+
 use Illuminate\Http\Request;
 use App\Models\tweet;
 use Illuminate\Support\Facades\Log;
@@ -33,7 +33,6 @@ class TweetService implements TweetServiceInterface
     $checktweet->user_id = $request->input('user_id');
     $checktweet->text = $request->input('text');
     $this->checkTweetsUserIDNULL($checktweet);
-    //$this->checkTweetsUserIDNotDB($addtweet->user_id);
     $this->checkTweetsBlank($checktweet);
     return $this->TweetsRepository->postTweets($request);
 
@@ -47,36 +46,10 @@ class TweetService implements TweetServiceInterface
       throw new Exception("Error-checkTweetsUserID");
     }else{
       Log::debug('user_idが指定されています');
+
     }
   }
-  //ユーザIDが存在するか確認する処理
-  /*private function checkTweetsUserIDNotDB(int $userId)
-  {
-    Log::debug($userId);
-    //ユーザが存在しているか確認するためのフラッグ
-    $userFoundFlag = false;
-    //全てのユーザ情報を$AllUserList[]に格納
-    $AllUserList[] = new User();
-    $AllUserList = $this->user_repository->getUserRecord(-1);
-    //ユーザがDBに存在するか確認する処理
-    for($ArrayCount = 0;$ArrayCount < count($AllUserList); $ArrayCount++)
-    {
-      if($AllUserList[$ArrayCount]->id == $userId)
-      {
-        $userFoundFlag = true;
-      }
-    }
-    //
-    if(!$userFoundFlag)
-    {
-      Log::debug('user_idがDBに存在していません');
-      throw new Exception("Error-checkTweetsUserIDNotDB");
-    }else{
-      Log::debug('user_idがDBに存在しています');
-    }
 
-
-  }*/
 
   //投稿されたテキストが空だった場合、エクセプションを発生させる
   private function checkTweetsBlank(tweet $tweet)
