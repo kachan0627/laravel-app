@@ -5,13 +5,17 @@ use App\Models\profile;
 
 class ProfileRepository implements ProfileRepositoryInterface
 {
-  public function getProfile(int $id= -1){
-  /*  if($id == -1){
-        return profile::get()->toJson();
+  public function getProfile(int $id){
+      $profileData = profile::where('user_id',$id)->first();
+      if($profileData ==NULL){
+        return false;
       }else{
-        return profile::find($id)->toJson();
-      }*/
-      return profile::where('user_id',$id)->first();
+      return $profileData;
+    }
   }
 
+  public function createProfile(profile $Profile){
+    $Profile->save();
+    return true;
+  }
 }
