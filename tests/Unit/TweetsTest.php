@@ -64,7 +64,8 @@ class TweetsTest extends TestCase
         $this->assertFalse(Auth::check());
      }
 
-     public function testGetTweets(){
+     public function testGetTweets()
+     {
        //ログイン処理
        $this->json('post','/login',[
          'email' => 'test2@test.com',
@@ -79,4 +80,5 @@ class TweetsTest extends TestCase
          $this->post('/logout');
          $this->assertFalse(Auth::check());
      }
+
 }

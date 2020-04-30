@@ -39,6 +39,10 @@ class AppServiceProvider extends ServiceProvider
           \App\Services\Tweet\TweetServiceInterface::class,
           \App\Services\Tweet\TweetService::class
         );
+        $this->app->bind(
+          \App\Services\Profile\ProfileServiceInterface::class,
+          \App\Services\Profile\ProfileService::class
+        );
     }
 
     /**

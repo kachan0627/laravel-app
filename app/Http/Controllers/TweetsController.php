@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\TweetsRepo\TweetsRepositoryInterface;
+//use App\Repositories\TweetsRepo\TweetsRepositoryInterface;
 use App\Repositories\Profile\ProfileRepositoryInterface;
 use App\Services\Tweet\TweetServiceInterface;
 //use App\Http\Resources\tweet AS TweetResource;

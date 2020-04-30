@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Profile;
+namespace App\Services\Profile;
 
 
 interface ProfileServiceInterface

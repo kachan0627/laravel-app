@@ -20,7 +20,7 @@ class UserRepositoryTest implements UserRepositoryInterface
     throw new Exception('createUserData例外発生しています');
   }
 
-  public function getUserRecordByJson(int $id)
+  public function getUserRecord(int $id)
   {
     //dd('getUserRecordByJson通ってます');
     throw new Exception('getUserRecordByJson例外発生しています');
@@ -34,5 +34,10 @@ class UserRepositoryTest implements UserRepositoryInterface
     public function getUserLoginId()
     {
       return Auth::id();
+    }
+
+    public function getUserRecordUsingEmail(string $email)
+    {
+      throw new Exception('getUserRecordUsingEmail例外発生しています');
     }
 }

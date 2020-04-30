@@ -2,6 +2,7 @@
 namespace App\Services\Profile;
 
 use App\Repositories\Profile\ProfileRepositoryInterface;
+use App\Services\Profile\ProfileServiceInterface;
 
 class ProfileService implements ProfileServiceInterface
 {
