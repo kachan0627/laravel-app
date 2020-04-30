@@ -4,17 +4,19 @@
     <p>{{msg}}</p>
     <p>{{msg_p}}</p>
     <hr>
-    <p>ユーザー名　{{login_data.nick_name}}</p>
-    <p>自己紹介　{{profile.introduction}}</p>
-    <p>出身地　{{profile.place}}</p>
-    <p>誕生日　{{profile.birthday}}</p>
-    <router-link class="nav-link active" :to="{ name: 'profileEdit' }">プロフィールを編集する</router-link>
+    <div v-if="getProf">
+      <p>ユーザー名　{{login_data.nick_name}}</p>
+      <p>自己紹介　{{profile.introduction}}</p>
+      <p>出身地　{{profile.place}}</p>
+      <p>誕生日　{{profile.birthday}}</p>
+      <router-link class="nav-link active" :to="{ name: 'profileEdit' }">プロフィールを編集する</router-link>
+    </div>
   </div>
 </template>
 <script>
 const axios = require('axios');
 export default {
-  mounted() {
+  created() {
     //this.getItems();
     axios.get('/tweets/login_user').then(response =>{
       this.login_data = response.data;
@@ -25,6 +27,7 @@ export default {
       axios.get('/tweets/profile_json/'+id).then(response=>{
         this.profile =response.data;
         this.msg_p = 'get profile';
+        this.getProf = true;
         //alert(this.profile.introduction);
       });
     });
@@ -37,6 +40,8 @@ export default {
             msg_p: 'wait...',
             login_data:null,
             profile:null,
+            getUser: false,
+            getProf: false,
         }
     }
   }

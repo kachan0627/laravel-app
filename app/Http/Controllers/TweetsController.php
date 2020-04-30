@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 //use App\Repositories\TweetsRepo\TweetsRepositoryInterface;
 use App\Repositories\Profile\ProfileRepositoryInterface;
+use App\Services\Profile\ProfileServiceInterface;
 use App\Services\Tweet\TweetServiceInterface;
 //use App\Http\Resources\tweet AS TweetResource;
 use App\Http\Resources\User AS UserResource;
@@ -27,11 +28,11 @@ class TweetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function __construct(TweetServiceInterface $TweetService,ProfileRepositoryInterface $profile_repository)
+     public function __construct(TweetServiceInterface $TweetService,ProfileServiceInterface $profileService)
      {
        $this->middleware('auth');
        $this->TweetService = $TweetService;
-       $this->profile_repository = $profile_repository;
+       $this->profileService = $profileService;
 
      }
 
@@ -163,7 +164,7 @@ class TweetsController extends Controller
     //profileテーブルをjsonファイルで出力
     public function profileJson(int $id=-1){
       try{
-        return $this->profile_repository->getProfile($id);
+        return $this->profileService->getProfileService($id)->toJson();
       }catch(\Exception $e){
         print_r('getProfileエクセプション通ってます');
         //dd($e);

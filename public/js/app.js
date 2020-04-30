@@ -2174,10 +2174,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
+  created: function created() {
     var _this = this;
 
     //this.getItems();
@@ -2188,7 +2190,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
       var id = _this.login_data.id;
       axios.get('/tweets/profile_json/' + id).then(function (response) {
         _this.profile = response.data;
-        _this.msg_p = 'get profile'; //alert(this.profile.introduction);
+        _this.msg_p = 'get profile';
+        _this.getProf = true; //alert(this.profile.introduction);
       });
     });
   },
@@ -2199,7 +2202,9 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
       msg: 'wait...',
       msg_p: 'wait...',
       login_data: null,
-      profile: null
+      profile: null,
+      getUser: false,
+      getProf: false
     };
   }
 });
@@ -38717,37 +38722,42 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("p", [_vm._v("プロフィール表示")]),
-      _vm._v(" "),
-      _c("p", [_vm._v(_vm._s(_vm.msg))]),
-      _vm._v(" "),
-      _c("p", [_vm._v(_vm._s(_vm.msg_p))]),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("p", [_vm._v("ユーザー名　" + _vm._s(_vm.login_data.nick_name))]),
-      _vm._v(" "),
-      _c("p", [_vm._v("自己紹介　" + _vm._s(_vm.profile.introduction))]),
-      _vm._v(" "),
-      _c("p", [_vm._v("出身地　" + _vm._s(_vm.profile.place))]),
-      _vm._v(" "),
-      _c("p", [_vm._v("誕生日　" + _vm._s(_vm.profile.birthday))]),
-      _vm._v(" "),
-      _c(
-        "router-link",
-        {
-          staticClass: "nav-link active",
-          attrs: { to: { name: "profileEdit" } }
-        },
-        [_vm._v("プロフィールを編集する")]
-      )
-    ],
-    1
-  )
+  return _c("div", { staticClass: "container" }, [
+    _c("p", [_vm._v("プロフィール表示")]),
+    _vm._v(" "),
+    _c("p", [_vm._v(_vm._s(_vm.msg))]),
+    _vm._v(" "),
+    _c("p", [_vm._v(_vm._s(_vm.msg_p))]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _vm.getProf
+      ? _c(
+          "div",
+          [
+            _c("p", [
+              _vm._v("ユーザー名　" + _vm._s(_vm.login_data.nick_name))
+            ]),
+            _vm._v(" "),
+            _c("p", [_vm._v("自己紹介　" + _vm._s(_vm.profile.introduction))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("出身地　" + _vm._s(_vm.profile.place))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("誕生日　" + _vm._s(_vm.profile.birthday))]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "nav-link active",
+                attrs: { to: { name: "profileEdit" } }
+              },
+              [_vm._v("プロフィールを編集する")]
+            )
+          ],
+          1
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
