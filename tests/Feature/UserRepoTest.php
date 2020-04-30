@@ -43,17 +43,17 @@ class UserRepoTest extends TestCase
 
     public function testlogin()
     {
-        //$this->assertFalse(Auth::check());
+        $this->assertFalse(Auth::check());
         //ログイン処理
         $response = $this->json('post','/login',[
-          'email' => 'test2@test.com',
+          'email' => 'test3@test.com',
           'password' => '12345678'
         ]);
         //ログイン出来ているかチェック
         $this->assertTrue(Auth::check());
         //jsonファイルする際にexceptionを返却する
         //$response= $this->json('get','/getUserRecordByJson');
-        $response= $this->json('get','/tweets/User_json');
+        /*$response= $this->json('get','/tweets/User_json');
         //exceptionが返却されているか確認する。
         //dd($response);
         $response->assertStatus(500);
@@ -61,7 +61,7 @@ class UserRepoTest extends TestCase
         $this->post('/logout');
         $this->assertFalse(Auth::check());
 
-
+*/
     }
 
    public function testcreate()

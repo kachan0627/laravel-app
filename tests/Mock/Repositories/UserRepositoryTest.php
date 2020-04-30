@@ -38,6 +38,15 @@ class UserRepositoryTest implements UserRepositoryInterface
 
     public function getUserRecordUsingEmail(string $email)
     {
-      throw new Exception('getUserRecordUsingEmail例外発生しています');
+      $loginUser = User::where('email',$email)->first();
+    //dd($loginUser);
+    if($loginUser==NULL){
+      //Log::debug('ユーザは存在しません');
+      throw new Exception('Error-getUserRecordUsingEmail');
+    }else{
+      //Log::debug('ユーザは存在します');
+      return $loginUser;
+
+    }
     }
 }
