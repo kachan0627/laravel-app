@@ -27,7 +27,12 @@ class UserRepository implements UserRepositoryInterface
     if($id == -1){
       return User::get();
     }else{
-      return User::find($id);
+      $findUserData = User::find($id);
+      if($findUserData==NULL){
+        return false;
+      }else{
+        return $findUserData;
+      }
     }
   }
 //ログインしているユーザー情報を取り出す
@@ -54,5 +59,6 @@ class UserRepository implements UserRepositoryInterface
       }
 
   }
+
 
 }

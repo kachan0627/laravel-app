@@ -46,7 +46,8 @@ class UserService implements UserServiceInterface
       {
         //dd($UserTmp[$ArrayCount]->acount_name);
 
-        throw new Exception('既にユーザが存在してます');
+        //throw new Exception('既にユーザが存在してます');
+        return false;
       }
     }
     return $this->user_repository->createUserData($data);
@@ -64,7 +65,8 @@ class UserService implements UserServiceInterface
     $DBUser = $this->user_repository->getUserRecordUsingEmail($LoginEmail);
     //emailから呼び出したユーザ情報のパスワードと入力されたパスワードが一致するか判定する
     if(!Hash::check($LoginPassword,$DBUser->password)){
-      throw new Exception('パスワード不一致です');
+      //throw new Exception('パスワード不一致です');
+      return false;
     }else{
       Log::debug('パスワード一致です');
     }

@@ -2,7 +2,7 @@
 namespace App\Services\Tweet;
 
 use App\Repositories\TweetsRepo\TweetsRepositoryInterface;
-
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\tweet;
 use Illuminate\Support\Facades\Log;
@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class TweetService implements TweetServiceInterface
 {
-  public function __construct(TweetsRepositoryInterface $tweet_repository)
+  public function __construct(TweetsRepositoryInterface $tweetRepository,UserRepositoryInterface $userRepository)
   {
-    $this->TweetsRepository = $tweet_repository;
-
+    $this->TweetsRepository = $tweetRepository;
+    $this->userRepository = $userRepository;
   }
 
   public function postTweetsService(Request $request)
@@ -29,17 +29,20 @@ class TweetService implements TweetServiceInterface
   //チェック関数を統合している。
   public function checkTweets(int $userId,string $text)
   {
-    $checktweet = new tweet();
-    $checktweet->user_id = $userId;
-    $checktweet->text = $text;
-    $this->checkTweetsUserIDNULL($checktweet);
-    $this->checkTweetsBlank($checktweet);
-    return $this->TweetsRepository->postTweets($checktweet);
-
+    //userIdがDBに存在するならば投稿する
+    if($this->userRepository->getUserRecord($userId))
+    {
+      $checktweet = new tweet();
+      $checktweet->user_id = $userId;
+      $checktweet->text = $text;
+      return $this->TweetsRepository->postTweets($checktweet);
+    }else{
+      return false;
+    }
   }
 
   //ユーザIDが取得できているか確認。
-  private function checkTweetsUserIDNULL(tweet $tweet)
+/*  private function checkTweetsUserIDNULL(tweet $tweet)
   {
     if($tweet->user_id == NULL){
       Log::debug('user_idが指定されていません');
@@ -48,11 +51,11 @@ class TweetService implements TweetServiceInterface
       Log::debug('user_idが指定されています');
 
     }
-  }
+  }*/
 
 
   //投稿されたテキストが空だった場合、エクセプションを発生させる
-  private function checkTweetsBlank(tweet $tweet)
+  /*private function checkTweetsBlank(tweet $tweet)
   {
     if($tweet->text == NULL){
       Log::debug('テキストが空です');
@@ -60,7 +63,7 @@ class TweetService implements TweetServiceInterface
     }else{
       Log::debug('テキストに入力されています');
     }
-  }
+  }*/
   //ログイン中のユーザーの投稿のみを呼び出す関数
   public function getUserTweets()
   {
